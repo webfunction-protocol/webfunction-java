@@ -8,6 +8,17 @@ import java.util.List;
 /**
  * Describes a single argument accepted by an endpoint.
  * See <a href="https://webfunction.org/package#argument-definition">webfunction.org/package#argument-definition</a>.
+ *
+ * <p><b>Open question:</b> a real production package
+ * (api.reservepay.com) sends an additional {@code hint} field on some
+ * arguments that isn't modeled here - not in the Ruby reference client,
+ * not in webfunction-go/js/php, not in the spec text this was built
+ * from. It's silently ignored rather than causing a parse failure (see
+ * {@link Json#MAPPER}'s FAIL_ON_UNKNOWN_PROPERTIES setting), but its
+ * actual shape/meaning and whether it's worth modeling explicitly is
+ * unconfirmed - worth asking whoever owns that API, or checking the
+ * webfunction.org spec's changelog for something newer than what this
+ * library was built against.
  */
 public record Argument(String name, Type type, String group, List<Object> choices, List<String> flags, String docs) {
 

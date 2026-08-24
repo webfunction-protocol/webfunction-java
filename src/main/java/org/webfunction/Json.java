@@ -1,5 +1,6 @@
 package org.webfunction;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /** Shared, package-private Jackson configuration used throughout the library. */
@@ -18,6 +19,17 @@ final class Json {
      * directly via reflection instead of using the constructor) -
      * explicit property names sidestep the issue regardless of Jackson
      * version.
+     *
+     * <p>FAIL_ON_UNKNOWN_PROPERTIES is disabled: a real production
+     * package (api.reservepay.com) was found to send an undocumented
+     * "hint" field on Argument that doesn't appear in the Ruby reference
+     * client, the webfunction.org spec text this model was built from,
+     * or any other client in this suite. Rather than hard-fail on
+     * fields this model doesn't yet know about - which would make every
+     * future protocol addition a breaking change for existing consumers
+     * - unknown fields are silently ignored. See Argument's doc comment
+     * for the open question of what "hint" actually is.
      */
-    static final ObjectMapper MAPPER = new ObjectMapper();
+    static final ObjectMapper MAPPER = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 }

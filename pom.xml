@@ -42,6 +42,19 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.2.5</version>
       </plugin>
+
+      <!--
+        Lets `mvn compile exec:java -Dexec.mainClass=...` run a class
+        with a main() method against the project's own dependencies,
+        without needing to hand-assemble a classpath. Used to run
+        example scripts under org.webfunction.examples - see
+        examples/available-api-versions.md.
+      -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.2.0</version>
+      </plugin>
     </plugins>
   </build>
 </project>
