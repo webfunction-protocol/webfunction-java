@@ -1,0 +1,40 @@
+package org.webfunction;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+
+/**
+ * Describes a single attribute of an object returned by an endpoint.
+ * See <a href="https://webfunction.org/package#attribute-definition">webfunction.org/package#attribute-definition</a>.
+ */
+public record Attribute(String name, Type type, List<Object> values, List<String> flags, String docs) {
+
+    @JsonCreator
+    public Attribute(
+            @JsonProperty("name") String name,
+            @JsonProperty("type") Type type,
+            @JsonProperty("values") List<Object> values,
+            @JsonProperty("flags") List<String> flags,
+            @JsonProperty("docs") String docs
+    ) {
+        this.name = name;
+        this.type = type;
+        this.values = values == null ? List.of() : List.copyOf(values);
+        this.flags = flags == null ? List.of() : List.copyOf(flags);
+        this.docs = docs;
+    }
+
+    /**
+     * Reports whether the attribute declares the "nullable" flag.
+     *
+     * <p>Per spec this means more than just "the value may be null": the
+     * key MAY be absent from the object entirely, and when present its
+     * value MAY be null. Consumers SHOULD treat a missing key and a null
+     * value equivalently.
+     */
+    public boolean nullable() {
+        return flags.contains("nullable");
+    }
+}
