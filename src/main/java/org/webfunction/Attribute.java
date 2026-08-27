@@ -3,6 +3,8 @@ package org.webfunction;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,7 +23,12 @@ public record Attribute(String name, Type type, List<Object> values, List<String
     ) {
         this.name = name;
         this.type = type;
-        this.values = values == null ? List.of() : List.copyOf(values);
+        // values may legitimately contain an explicit JSON null entry
+        // (a "no value" choice) - List.copyOf rejects null elements
+        // outright, so a null-tolerant copy is used here instead. flags
+        // has no such requirement (it's a fixed, non-null vocabulary),
+        // so it's left as-is.
+        this.values = values == null ? List.of() : Collections.unmodifiableList(new ArrayList<>(values));
         this.flags = flags == null ? List.of() : List.copyOf(flags);
         this.docs = docs;
     }

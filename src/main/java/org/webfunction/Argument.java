@@ -3,6 +3,8 @@ package org.webfunction;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,7 +45,12 @@ public record Argument(String name, Type type, String group, List<Object> choice
         this.name = name;
         this.type = type;
         this.group = group;
-        this.choices = choices == null ? List.of() : List.copyOf(choices);
+        // choices may legitimately contain an explicit JSON null entry
+        // (a "no value" choice) - List.copyOf rejects null elements
+        // outright, so a null-tolerant copy is used here instead. flags
+        // has no such requirement (it's a fixed, non-null vocabulary),
+        // so it's left as-is.
+        this.choices = choices == null ? List.of() : Collections.unmodifiableList(new ArrayList<>(choices));
         this.flags = flags == null ? List.of() : List.copyOf(flags);
         this.docs = docs;
     }
