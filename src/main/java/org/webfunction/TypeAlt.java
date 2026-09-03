@@ -4,7 +4,7 @@ package org.webfunction;
  * One alternative within a {@link Type}'s union.
  *
  * <p>Ported from webfunction-go's {@code TypeAlt}, itself cross-checked
- * against the Ruby reference client (github.com/robinclart/web_function).
+ * against the Ruby reference client (github.com/webfunction-protocol/webfunction-ruby).
  *
  * @param base       one of: "object", "array", "string", "number",
  *                   "boolean", "null", or "any"

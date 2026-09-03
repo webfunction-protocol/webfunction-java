@@ -2,8 +2,8 @@ package org.webfunction;
 
 /**
  * Base class for every exception this library throws. Unchecked
- * ({@code extends RuntimeException}) - a deliberate choice discussed with
- * Jon: modern Java style, less call-site ceremony, at the cost of errors
+ * ({@code extends RuntimeException}) - a deliberate choice discussed up
+ * front: modern Java style, less call-site ceremony, at the cost of errors
  * being able to propagate silently if a caller doesn't think to catch
  * them.
  *

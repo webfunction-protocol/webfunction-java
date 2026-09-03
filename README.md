@@ -2,8 +2,8 @@
 
 A Java client library for the [Web Function](https://webfunction.org) protocol.
 
-Ported from and cross-checked against the reference Ruby gem
-([robinclart/web_function](https://github.com/robinclart/web_function)) and
+Ported from and cross-checked against the official Ruby gem
+([gem](https://github.com/webfunction-protocol/webfunction-ruby)) and
 the [webfunction-go](https://github.com/webfunction-protocol/webfunction-go)
 port, adjusted where Java's language model genuinely differs (real
 exceptions, real generics, `Iterable`) or where a deliberate ecosystem-wide
